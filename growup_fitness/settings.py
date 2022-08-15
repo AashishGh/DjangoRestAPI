@@ -11,10 +11,10 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
@@ -25,7 +25,8 @@ SECRET_KEY = 'django-insecure-h2tz)7ppdhlxxwu1_!6_!*fyv%3&l=)^kt%g6#^2awibr80t2d
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', '192.168.1.119', '192.168.1.97']
+# ALLOWED_HOSTS = ['127.0.0.1', '192.168.1.119', '192.168.1.97']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -39,8 +40,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'rest_framework',
+    'rest_framework_simplejwt',
     'members',
     'django_filters',
+    'authusers',
+    'drf_yasg'
     
 ]
 
@@ -86,6 +90,9 @@ DATABASES = {
     }
 }
 
+
+# Custom User Model
+AUTH_USER_MODEL = 'authusers.CustomUser'
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -153,4 +160,24 @@ CSRF_TRUSTED_ORIGINS = [
     "http://localhost:3000"
     ]
 
+
+REST_FRAMEWORK = {
+    
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+
+    'DEFAULT_PERMISSION_CLASSES': [
+    'rest_framework.permissions.IsAuthenticated',
+    ],
+
+}
+
+
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=10),
+    'REFRESH_TOKEN_LIFETIME': timedelta(minutes=1),
+}
 
