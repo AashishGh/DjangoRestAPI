@@ -135,7 +135,7 @@ class PackageDetails(models.Model):
     package_period = models.CharField(choices=PACKAGE_PERIOD, max_length=20)
     convenient_time = models.CharField(choices=CONVENIENT_TIME,max_length=50)
     start_date = models.DateField()
-    package_fee = models.FloatField(help_text="In Rupees")
+    package_fee = models.FloatField(help_text="In Rupees", default=0)
     payment_mode = models.CharField(choices=PAYMENT_MODE,max_length=50)
     received_amount = models.FloatField(help_text="In Rupees", default=0, null=True, blank=True)
     receipt_date = models.DateField(blank=True, null=True)
