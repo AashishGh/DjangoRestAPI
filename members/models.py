@@ -135,7 +135,7 @@ class PackageDetails(models.Model):
     package_period = models.CharField(choices=PACKAGE_PERIOD, max_length=20)
     convenient_time = models.CharField(choices=CONVENIENT_TIME,max_length=50)
     start_date = models.DateField()
-    total_fee = models.FloatField(help_text="In Rupees", blank=True)
+    package_fee = models.FloatField(help_text="In Rupees")
     payment_mode = models.CharField(choices=PAYMENT_MODE,max_length=50)
     received_amount = models.FloatField(help_text="In Rupees", default=0, null=True, blank=True)
     receipt_date = models.DateField(blank=True, null=True)
@@ -187,7 +187,7 @@ class PackageDetails(models.Model):
 
     @property 
     def due_amount(self):
-        amount = self.total_fee - self.received_amount
+        amount = self.package_fee + self.admission_charge - self.received_amount
         return float(amount)
 
 
